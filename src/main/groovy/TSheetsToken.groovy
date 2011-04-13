@@ -4,7 +4,7 @@
 import groovyx.net.http.RESTClient
 import net.sf.json.groovy.JsonSlurper
  
-tsheets = new RESTClient( 'https://airspeed.tsheets.com/api.php' )
+tsheets = new RESTClient( '' )
  
 def resp = tsheets.get( query: [ action:'get_token', api_key:'', username:'', password:'', output_format:'json' ] )
 assert resp.status == 200
