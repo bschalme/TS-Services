@@ -1,5 +1,5 @@
 @Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.5.1')
-@Grab('net.sf.json-lib:json-lib:2.3:jdk15')
+@Grab('net.sf.json-lib:json-lib:2.4:jdk15')
 
 import groovyx.net.http.RESTClient
 import net.sf.json.groovy.JsonSlurper
@@ -16,7 +16,7 @@ println "status = ${result.status}, ${result.message}"
 def token = result.token
 println "token = ${token}"
 
-resp = tsheets.get( query: [action:'get_timesheets', token:token, start_date:'2011-03-11', end_date:'2011-03-12' ] )
+resp = tsheets.get( query: [action:'get_timesheets', token:token, start_date:'2011-03-11', end_date:'2011-03-12', output_format:'json' ] )
 assert resp.status == 200
 result = new JsonSlurper().parseText(resp.data.toString())
 println "status = ${result.status}, ${result.message}"
