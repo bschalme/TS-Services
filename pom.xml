@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ca.airspeed</groupId>
-	<artifactId>tsheets</artifactId>
+	<artifactId>timesheet-services</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>TSheets Service</name>
+	<name>Timesheet Services</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -18,6 +18,19 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>1.8.0</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-eclipse-compiler</artifactId>
+			<version>0.5.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
@@ -27,7 +40,6 @@
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>1.5</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -44,11 +56,17 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.json-lib</groupId>
-			<artifactId>json-lib</artifactId>
-			<version>2.4</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
 			<type>jar</type>
-			<classifier>jdk15</classifier>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -57,16 +75,16 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.codehaus.groovy.modules.http-builder</groupId>
 			<artifactId>http-builder</artifactId>
 			<version>0.5.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.gmaven.runtime</groupId>
-			<artifactId>gmaven-runtime-1.7</artifactId>
-			<version>1.3</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -81,21 +99,78 @@
 
 	<build>
 		<plugins>
+			<!--<plugin> <groupId>org.codehaus.gmaven</groupId> <artifactId>gmaven-plugin</artifactId> 
+				<version>1.3</version> <executions> <execution> <goals> <goal>generateStubs</goal> 
+				<goal>compile</goal> <goal>generateTestStubs</goal> <goal>testCompile</goal> 
+				</goals> </execution> </executions> </plugin> -->
 			<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>gmaven-plugin</artifactId>
-				<version>1.3</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
 				<executions>
 					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
 						<goals>
-							<goal>generateStubs</goal>
-							<goal>compile</goal>
-							<goal>generateTestStubs</goal>
-							<goal>testCompile</goal>
+							<goal>add-source</goal>
 						</goals>
+						<configuration>
+							<sources>
+								<source>src/main/groovy</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test/groovy</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-test-resource</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test/resources</source>
+							</sources>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<compilerId>groovy-eclipse-compiler</compilerId>
+					<verbose>false</verbose>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-eclipse-compiler</artifactId>
+						<version>0.5.1-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.eclipse.jdt.groovy.core.groovyNature</projectnature>
+					</additionalProjectnatures>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 	<repositories>
@@ -109,5 +184,21 @@
 			<name>Java.net Repository for maven</name>
 			<url>http://download.java.net/maven/2/</url>
 		</repository>
+		<repository>
+			<id>springsource</id>
+			<url>http://maven.springframework.org/snapshot</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>springsource</id>
+			<url>http://maven.springframework.org/snapshot</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>

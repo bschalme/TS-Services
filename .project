@@ -1,5 +1,5 @@
 <projectDescription>
-  <name>tsheets</name>
+  <name>timesheet-services</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects/>
   <buildSpec>
@@ -9,5 +9,6 @@
   </buildSpec>
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
   </natures>
 </projectDescription>

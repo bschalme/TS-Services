@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:tsheets.properties" />
+	</bean>
+
+	<bean id="tsheetsToken" class="ca.airspeed.timesheet.tsheets.TSheetsToken">
+		<constructor-arg name="url" value="${tsheets.url}" />
+		<constructor-arg name="apiKey" value="${tsheets.apiKey}" />
+		<constructor-arg name="username" value="${tsheets.username}" />
+		<constructor-arg name="password" value="${tsheets.password}" />
+	</bean>
+</beans>
