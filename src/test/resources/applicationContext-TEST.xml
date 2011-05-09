@@ -16,4 +16,9 @@
 		<constructor-arg name="username" value="${tsheets.username}" />
 		<constructor-arg name="password" value="${tsheets.password}" />
 	</bean>
+
+	<bean id="tsheetsDAO" class="ca.airspeed.timesheet.tsheets.TSheetsDAO">
+		<property name="token" ref="tsheetsToken" />
+		<property name="apiUrl" value="${tsheets.url}" />
+	</bean>
 </beans>

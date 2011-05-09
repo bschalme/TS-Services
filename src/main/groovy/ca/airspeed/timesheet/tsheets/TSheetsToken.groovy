@@ -5,10 +5,10 @@ package ca.airspeed.timesheet.tsheets
 import org.apache.commons.lang.StringUtils;
 
 import groovyx.net.http.RESTClient
-import groovy.json.JsonSlurper
+// import groovy.json.JsonSlurper
 import net.sf.json.groovy.JsonSlurper
 
-class TSheetsToken {
+class TSheetsToken implements ITSheetsToken {
 	String url
 	String apiKey
 	String username
@@ -23,12 +23,6 @@ class TSheetsToken {
 		def result = new JsonSlurper().parseText(resp.data.toString())
 		assert result.status == 'ok'
 		token = result.token
-	}
-
-	public String getToken() {
-		if (token == null) {
-		}
-		return token
 	}
 
 	public String logout() {

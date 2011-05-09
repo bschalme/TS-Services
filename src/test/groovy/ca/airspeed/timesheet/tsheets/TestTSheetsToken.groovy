@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 class TestTSheetsToken {
 
 	@Autowired
-	TSheetsToken tsheetsToken
+	ITSheetsToken tsheetsToken
 
 	@After
 	void tearDown() {
