@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * <p>Ensure you have a file on the classpath named {@code tsheets.properties}. It needs to have 
  * the following properties defined:</p>
  * <ul>
- * <li>tsheets.url=(Your URL to thr TSheets API)</li>
+ * <li>tsheets.url=(Your URL to the TSheets API)</li>
  * <li>tsheets.apiKey=(Your API key)</li>
  * <li>tsheets.username=</li>
  * <li>tsheets.password=</li>
@@ -36,6 +36,15 @@ class TestTSheetsDAO {
 	/**
 	 * Tests a read by date range. This does a comprehensive test to ensure all properties of 
 	 * {@link ca.airspeed.canonical.TimesheetEntry TimesheetEntry} are set with the expected values.
+	 * <p>Ensure you have a file in {@code src/test/resources} named {@code testCase.properties}. It needs to have 
+	 * the following properties defined with the expected values from the first entry that TSheets returns. 
+	 * All values (i.e. what is to the right of the equals sign) needs to be enclosed in double quotes:</p>
+	 * <ul>
+	 * <li>TestTSheetsDAO.testReadByDateRange.customerName=</li>
+	 * <li>TestTSheetsDAO.testReadByDateRange.jobName=</li>
+	 * <li>TestTSheetsDAO.testReadByDateRange.itemName=</li>
+	 * <li>TestTSheetsDAO.testReadByDateRange.notes=</li>
+	 * </ul>
 	 * 
 	 */
 	@Test
@@ -54,7 +63,7 @@ class TestTSheetsDAO {
 		assertEquals "Username;", "bschalme", entry.username
 		assertTrue "Expected a value for startTime.", entry.getStartTime() != null
 		def expectedStartTime = new Date().parse('yyyy-MM-dd HH:mm:ss', '2011-04-01 08:00:00')
-		assertEquals "Start time;", expectedStartTime, entry.startTime
+		assertEquals "Start time (set the date format IAW the workaround in the Company Settings);", expectedStartTime, entry.startTime
 		def expectedEndTime = new Date().parse('yyyy-MM-dd HH:mm:ss', '2011-04-01 10:00:00')
 		assertTrue "Expected a value for endTime.", entry.getEndTime() != null
 		assertEquals "End time;", expectedEndTime, entry.endTime
