@@ -11,6 +11,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
+		<groovy.eclipse.compiler.version>0.5.1-SNAPSHOT</groovy.eclipse.compiler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.6.1</slf4j.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
@@ -24,13 +25,9 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		<!--<dependency>
-        	<groupId>org.codehaus.groovy.maven.runtime</groupId>
-        	<artifactId>gmaven-runtime-default</artifactId>
-        	<version>1.0-rc-3</version>
-        	<scope>test</scope>
-    	</dependency>
-		--><dependency>
+		<!--<dependency> <groupId>org.codehaus.groovy.maven.runtime</groupId> <artifactId>gmaven-runtime-default</artifactId> 
+			<version>1.0-rc-3</version> <scope>test</scope> </dependency> -->
+		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<version>1.8.0</version>
@@ -39,7 +36,7 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-eclipse-compiler</artifactId>
-			<version>0.5.1-SNAPSHOT</version>
+			<version>${groovy.eclipse.compiler.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -126,43 +123,17 @@
 
 	<build>
 		<plugins>
-			<!--<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>gmaven-plugin</artifactId>
-				<version>1.3</version>
-				<dependencies>
-        			<dependency>
-			            <groupId>org.codehaus.groovy</groupId>
-			            <artifactId>groovy-all</artifactId>
-			            <version>1.8.0</version>
-        			</dependency>
-        			<dependency>
-            			<groupId>org.codehaus.gmaven.runtime</groupId>
-            			<artifactId>gmaven-runtime-1.7</artifactId>
-            			<version>1.2</version>
-            			<exclusions>
-              				<exclusion>
-                				<groupId>org.codehaus.groovy</groupId>
-                				<artifactId>groovy-all</artifactId>
-              				</exclusion>
-            			</exclusions>
-          			</dependency>
-    			</dependencies>
-				<executions>
-					<execution>
-						<configuration>
-							<providerSelection>1.7</providerSelection>
-						</configuration>
-						<goals>
-							<goal>generateStubs</goal>
-							<goal>compile</goal>
-							<goal>generateTestStubs</goal>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			--><plugin>
+			<!--<plugin> <groupId>org.codehaus.gmaven</groupId> <artifactId>gmaven-plugin</artifactId> 
+				<version>1.3</version> <dependencies> <dependency> <groupId>org.codehaus.groovy</groupId> 
+				<artifactId>groovy-all</artifactId> <version>1.8.0</version> </dependency> 
+				<dependency> <groupId>org.codehaus.gmaven.runtime</groupId> <artifactId>gmaven-runtime-1.7</artifactId> 
+				<version>1.2</version> <exclusions> <exclusion> <groupId>org.codehaus.groovy</groupId> 
+				<artifactId>groovy-all</artifactId> </exclusion> </exclusions> </dependency> 
+				</dependencies> <executions> <execution> <configuration> <providerSelection>1.7</providerSelection> 
+				</configuration> <goals> <goal>generateStubs</goal> <goal>compile</goal> 
+				<goal>generateTestStubs</goal> <goal>testCompile</goal> </goals> </execution> 
+				</executions> </plugin> -->
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.5</version>
@@ -216,7 +187,7 @@
 					<dependency>
 						<groupId>org.codehaus.groovy</groupId>
 						<artifactId>groovy-eclipse-compiler</artifactId>
-						<version>0.5.1-SNAPSHOT</version>
+						<version>${groovy.eclipse.compiler.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
