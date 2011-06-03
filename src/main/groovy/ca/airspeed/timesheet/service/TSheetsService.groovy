@@ -33,31 +33,36 @@ import java.util.Date;
 class TSheetsService implements ITimesheetService {
 	private static final String YMD = "yyyy-MM-dd"
 	private static final String LAST_FETCHED = "timesheet.last.fetch.date"
-	
+
 	@Autowired
 	ITimesheetDAO timesheetDao
-	
+
 	@Autowired
 	IControlDAO controlDao
-	
+
 	TimesheetEntry[] create(TimesheetEntry[] entries) {
 		throw new NotImplementedException()
 	}
-	
+
 	TimesheetEntry[] read(Date from, Date to) {
 		throw new NotImplementedException()
 	}
-	
+
 	TimesheetEntry[] fetchNewTimesheetEntries() {
 		Control ctrl = controlDao.read(LAST_FETCHED)
 		DateTimeFormatter fmt = DateTimeFormat.forPattern(YMD)
 		DateTime lastFetchedDT = fmt.parseDateTime(ctrl.value)
 		String yesterdayStr = fmt.print(new DateTime().minusDays(1))
 		DateTime yesterday = fmt.parseDateTime(yesterdayStr)
-		
-		def results =  timesheetDao.read(lastFetchedDT.plusDays(1).toDate(), yesterday.toDate())
-		ctrl.value = yesterdayStr
-		controlDao.update(ctrl)
+
+		def results =  []
+		// If the last fetch date is before yesterday, grab the new TimeSheetEntries, and
+		// update last fetch date:
+		if (lastFetchedDT.compareTo(yesterday) < 0) {
+			results = timesheetDao.read(lastFetchedDT.plusDays(1).toDate(), yesterday.toDate())
+			ctrl.value = yesterdayStr
+			controlDao.update(ctrl)
+		}
 		return results
 	}
 }

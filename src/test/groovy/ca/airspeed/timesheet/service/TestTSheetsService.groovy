@@ -34,7 +34,7 @@ import static org.easymock.EasyMock.*
 
 class TestTSheetsService {
 	def mockControl = createStrictControl()
-	
+
 	@Test
 	void testFetchTwoDays() {
 		TSheetsService service = new TSheetsService()
@@ -51,13 +51,66 @@ class TestTSheetsService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
 		def dtYesterday = sdf.parse(fmt.print(yesterday))
 		def dtTwoDaysAgo = sdf.parse(fmt.print(twoDaysAgo))
-		
+
 		Control oldControl = new Control(id:1, name:"timesheet.last.fetch.date", value:fmt.print(threeDaysAgo))
 		Control newControl = new Control(id:1, name:"timesheet.last.fetch.date", value:fmt.print(yesterday))
 		expect(mockControlDao.read("timesheet.last.fetch.date")).andReturn(oldControl)
 		expect(mockTimesheetDao.read(dtTwoDaysAgo, dtYesterday)).andReturn(new ArrayList<TimesheetEntry>())
 		expect(mockControlDao.update(newControl)).andReturn(newControl)
-		
+
+		mockControl.replay()
+		def timesheetEntries = service.fetchNewTimesheetEntries()
+		mockControl.verify()
+	}
+
+	@Test
+	void testFetchOneDay() {
+		TSheetsService service = new TSheetsService()
+		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
+		def mockControlDao = mockControl.createMock(IControlDAO.class)
+		service.setTimesheetDao(mockTimesheetDao)
+		service.setControlDao(mockControlDao)
+
+		DateTime now = new DateTime()
+		DateTime yesterday = now.minusDays(1)
+		DateTime twoDaysAgo = now.minusDays(2)
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
+		def dtYesterday = sdf.parse(fmt.print(yesterday))
+
+		Control oldControl = new Control(id:1, name:"timesheet.last.fetch.date", value:fmt.print(twoDaysAgo))
+		Control newControl = new Control(id:1, name:"timesheet.last.fetch.date", value:fmt.print(yesterday))
+		expect(mockControlDao.read("timesheet.last.fetch.date")).andReturn(oldControl)
+		expect(mockTimesheetDao.read(dtYesterday, dtYesterday)).andReturn(new ArrayList<TimesheetEntry>())
+		expect(mockControlDao.update(newControl)).andReturn(newControl)
+
+		mockControl.replay()
+		def timesheetEntries = service.fetchNewTimesheetEntries()
+		mockControl.verify()
+	}
+
+	/**
+	 * Ensures a re-run does not even try to fetch any data. When the last fetch date is yesterday, 
+	 * don't even bother to check for new timesheets since the start date will be later than the
+	 * end date.
+	 */
+	@Test
+	void testFetchNothing() {
+		TSheetsService service = new TSheetsService()
+		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
+		def mockControlDao = mockControl.createMock(IControlDAO.class)
+		service.setTimesheetDao(mockTimesheetDao)
+		service.setControlDao(mockControlDao)
+
+		DateTime now = new DateTime()
+		DateTime yesterday = now.minusDays(1)
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
+		def dtYesterday = sdf.parse(fmt.print(yesterday))
+
+		Control oldControl = new Control(id:1, name:"timesheet.last.fetch.date", value:fmt.print(yesterday))
+		expect(mockControlDao.read("timesheet.last.fetch.date")).andReturn(oldControl)
+
 		mockControl.replay()
 		def timesheetEntries = service.fetchNewTimesheetEntries()
 		mockControl.verify()
