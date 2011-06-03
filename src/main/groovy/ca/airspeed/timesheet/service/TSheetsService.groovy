@@ -40,8 +40,11 @@ class TSheetsService implements ITimesheetService {
 	@Autowired
 	IControlDAO controlDao
 
-	TimesheetEntry[] create(TimesheetEntry[] entries) {
-		throw new NotImplementedException()
+	TimesheetEntry[] create(List<TimesheetEntry> entries) {
+		if (entries.size() > 0) {
+			entries = timesheetDao.create(entries)
+		}
+		return entries
 	}
 
 	TimesheetEntry[] read(Date from, Date to) {

@@ -115,4 +115,38 @@ class TestTSheetsService {
 		def timesheetEntries = service.fetchNewTimesheetEntries()
 		mockControl.verify()
 	}
+	
+	@Test
+	void testCreateFromList() {
+		TSheetsService service = new TSheetsService()
+		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
+		def mockControlDao = mockControl.createMock(IControlDAO.class)
+		service.setTimesheetDao(mockTimesheetDao)
+		service.setControlDao(mockControlDao)
+
+		def entries = []
+		entries.add(new TimesheetEntry())
+		entries.add(new TimesheetEntry())
+		entries.add(new TimesheetEntry())
+		expect(mockTimesheetDao.create(entries)).andReturn(entries)
+		
+		mockControl.replay()
+		def results = service.create(entries)
+		mockControl.verify()
+	}
+	
+	@Test
+	void testCreateFromEmptyList() {
+		TSheetsService service = new TSheetsService()
+		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
+		def mockControlDao = mockControl.createMock(IControlDAO.class)
+		service.setTimesheetDao(mockTimesheetDao)
+		service.setControlDao(mockControlDao)
+
+		def entries = []
+
+		mockControl.replay()
+		def results = service.create(entries)
+		mockControl.verify()
+	}
 }

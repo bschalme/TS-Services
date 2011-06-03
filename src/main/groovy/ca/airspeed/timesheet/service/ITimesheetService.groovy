@@ -19,7 +19,7 @@ package ca.airspeed.timesheet.service
 import ca.airspeed.canonical.TimesheetEntry
 
 interface ITimesheetService {
-	TimesheetEntry[] create(TimesheetEntry[] entries)
+	TimesheetEntry[] create(List<TimesheetEntry> entries)
 	
 	TimesheetEntry[] read(Date from, Date to)
 	
