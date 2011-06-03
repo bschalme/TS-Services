@@ -25,8 +25,22 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>ca.airspeed</groupId>
+			<artifactId>control-service</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		<!--<dependency> <groupId>org.codehaus.groovy.maven.runtime</groupId> <artifactId>gmaven-runtime-default</artifactId> 
 			<version>1.0-rc-3</version> <scope>test</scope> </dependency> -->
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.0</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
@@ -56,12 +70,11 @@
 			<artifactId>joda-time</artifactId>
 			<version>1.6.2</version>
 			<type>jar</type>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.1</version>
+			<version>${slf4j.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
