@@ -32,12 +32,12 @@ import ca.airspeed.control.IControlDAO
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.easymock.EasyMock.*
 
-class TestTSheetsService {
+class TestTimesheetServiceImpl {
 	def mockControl = createStrictControl()
 
 	@Test
 	void testFetchTwoDays() {
-		TSheetsService service = new TSheetsService()
+		TimesheetServiceImpl service = new TimesheetServiceImpl()
 		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
 		def mockControlDao = mockControl.createMock(IControlDAO.class)
 		service.setTimesheetDao(mockTimesheetDao)
@@ -65,7 +65,7 @@ class TestTSheetsService {
 
 	@Test
 	void testFetchOneDay() {
-		TSheetsService service = new TSheetsService()
+		TimesheetServiceImpl service = new TimesheetServiceImpl()
 		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
 		def mockControlDao = mockControl.createMock(IControlDAO.class)
 		service.setTimesheetDao(mockTimesheetDao)
@@ -96,7 +96,7 @@ class TestTSheetsService {
 	 */
 	@Test
 	void testFetchNothing() {
-		TSheetsService service = new TSheetsService()
+		TimesheetServiceImpl service = new TimesheetServiceImpl()
 		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
 		def mockControlDao = mockControl.createMock(IControlDAO.class)
 		service.setTimesheetDao(mockTimesheetDao)
@@ -118,7 +118,7 @@ class TestTSheetsService {
 	
 	@Test
 	void testCreateFromList() {
-		TSheetsService service = new TSheetsService()
+		TimesheetServiceImpl service = new TimesheetServiceImpl()
 		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
 		def mockControlDao = mockControl.createMock(IControlDAO.class)
 		service.setTimesheetDao(mockTimesheetDao)
@@ -137,7 +137,7 @@ class TestTSheetsService {
 	
 	@Test
 	void testCreateFromEmptyList() {
-		TSheetsService service = new TSheetsService()
+		TimesheetServiceImpl service = new TimesheetServiceImpl()
 		def mockTimesheetDao = mockControl.createMock(ITimesheetDAO.class)
 		def mockControlDao = mockControl.createMock(IControlDAO.class)
 		service.setTimesheetDao(mockTimesheetDao)

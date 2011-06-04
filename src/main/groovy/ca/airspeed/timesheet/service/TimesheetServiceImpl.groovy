@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 
 
-class TSheetsService implements ITimesheetService {
+class TimesheetServiceImpl implements ITimesheetService {
 	private static final String YMD = "yyyy-MM-dd"
 	private static final String LAST_FETCHED = "timesheet.last.fetch.date"
 
